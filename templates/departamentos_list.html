@@ -1,0 +1,79 @@
+{% extends "./base.html" %}
+
+{% block title %} DEPARTAMENTOS {% endblock %}
+
+{% block body %}
+<div class="container mt-3">
+    <h1>Departamentos</h1>
+    <div class="col-md-6 offset-md-3 mt-3">
+        <form method="post" action="{% url 'departamentos_search' %}">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                <input type="text" name="search" class="form-control" placeholder="Buscar departamento...">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <a href="{% url 'departamentos_create' %}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Agregar</a>
+        </div>
+    <div class="table-responsive py-2">
+        <table class="table table-striped" id="DataTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for departamento in departamentos %}
+                <tr>
+                    <td>{{ departamento.id_departamento }}</td>
+                    <td>{{ departamento.nombre_departamento }}</td>
+                    <td>
+                        <a href="{% url 'departamentos_edit' departamento.id_departamento %}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Editar</a>
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#eliminarDepartamentoModal"><i class="fas fa-trash"></i> Eliminar</button> 
+                    </td>
+<div class="modal fade" id="eliminarDepartamentoModal" tabindex="-1" role="dialog" aria-labelledby="eliminarDepartamentoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarDepartamentoModalLabel">Eliminar departamento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro que desea eliminar el departamento?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a href="{% url 'departamentos_delete' departamento.id_departamento %}" class="btn btn-danger">Eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+    $('#eliminarDepartamentoModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var id_departamento = button.data('id_departamento')
+        var modal = $(this)
+        modal.find('.modal-title').text('Eliminar departamento ' + id_departamento)
+        modal.find('.modal-footer a').attr('href', '{% url "departamentos_delete" 0 %}'.replace('0', id_departamento))
+    })
+</script>
+   
+{% endblock %}                              
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock%}

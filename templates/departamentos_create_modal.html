@@ -1,0 +1,13 @@
+{% extends "./base.html" %}
+
+{% block title %} CREAR DEPARTAMENTO {% endblock %}
+
+{% block body %}
+    <h1>Agregar Departamento</h1>
+    <form id="departamentoForm" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" id="submitDepartamento" class="btn btn-primary">Guardar</button>
+        <a href="{% url 'departamentos_list' %}" class="btn btn-danger">Cancelar</a>
+    </form>
+{% endblock %}

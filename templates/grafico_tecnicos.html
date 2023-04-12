@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Cantidad de ingresos por técnico</h1>
+
+{% if tecnicos %}
+  <div style="width: 700px; height: 300px">
+    <canvas id="grafico"></canvas>
+  </div>
+{% else %}
+  <p>No hay datos para mostrar</p>
+{% endif %}
+
+{% if tecnicos %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    var tecnicos = JSON.parse('{{ tecnicos|safe }}');
+    var nombres = Object.keys(tecnicos);
+    var valores = Object.values(tecnicos);
+    var ctx = document.getElementById('grafico').getContext('2d');
+    var chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: nombres,
+        datasets: [{
+          label: 'Ingresos',
+          data: valores,
+          backgroundColor: 'rgba(0, 123, 255, 0.2)',
+          borderColor: 'rgba(0, 123, 255, 1)',
+          borderWidth: 1,
+          pointBackgroundColor: 'rgba(0, 123, 255, 1)'
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  </script>
+{% endif %}
+{% endblock %}

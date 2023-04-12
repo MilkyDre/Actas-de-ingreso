@@ -1,0 +1,47 @@
+{% extends "./base.html" %}
+
+{% block title %} CREAR EQUIPO {% endblock %}
+
+{% block body %}
+<div class="container mt-3">
+  <h1>Equipos</h1>
+  <a href="{% url 'equipos_create' %}" class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Agregar Equipo</a>
+  <div class="table-responsive py-2">
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                <th>Código QR</th>
+                <th>Serial</th>
+                <th>Tipo</th>
+                <th>Modelo</th>
+                <th>Marca</th>
+                <th>Departamento</th>
+                <th>Acciones</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for equipo in equipos %}
+              <tr>
+                <td>
+                  <img src="/static/img/DOM12.png" height="60px" width="60px" alt="Código QR">
+                </td>
+                <td>{{ equipo.serial }}</td>
+                <td>{{ equipo.tipo }}</td>
+                <td>{{ equipo.modelo }}</td>
+                <td>{{ equipo.marca }}</td>
+                <td>{{ equipo.depto.nombre_departamento }}</td>
+                <td>
+                    <a href="{% url 'equipos_edit' equipo.serial %}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Editar</a>
+                    <a href="{% url 'equipos_delete' equipo.serial %}" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Eliminar</a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                  <td colspan="5">No hay equipos</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+  </div>
+</div>
+{% endblock %}

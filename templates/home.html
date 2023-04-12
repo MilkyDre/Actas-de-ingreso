@@ -1,0 +1,305 @@
+{% extends 'base.html' %}
+{% block title %} HOME {% endblock %}
+{% block body %}
+                        <h1 class="mt-4">Dashboard</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">INGRESOS</li>
+                        </ol>
+                        <div class="row">
+                            <div class="col-xl-4 col-md-6">
+                                <div class="card bg-danger text-white mb-4">
+                                    <div class="card-body">EN ESPERA: {{ en_espera_count }}</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#" data-toggle="modal" data-target="#modal_en_espera">Ver detalles</a>
+
+<!-- Modal ingresos en espera -->
+<div class="modal fade" id="modal_en_espera" tabindex="-1" role="dialog" aria-labelledby="modal_en_esperaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Ingresos en espera</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Técnico</th>
+              <th>Descripción del problema</th>
+              <th>Perifericos</th>
+              <th>Fecha de ingreso</th>
+              <th>Equipo</th>
+              <th>Funcionario</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ingreso in ingresos_en_espera %}
+            <tr>
+              <td>{{ ingreso.id_ingreso }}</td>
+              <td>{{ ingreso.tecnico }}</td>
+              <td>{{ ingreso.descripcion_problema }}</td>
+              <td>
+                {% for periferico in ingreso.perifericos %}
+                {{ periferico }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              </td>
+              <td>{{ ingreso.fecha_ingreso }}</td>
+              <td>{{ ingreso.equipo }}</td>
+              <td>{{ ingreso.funcionario }}</td>
+              <td>{{ ingreso.estado_equipo }}</td>
+            </tr>
+              {% empty %}
+            <tr>
+                <td colspan="8">No hay ingresos</td>
+            </tr>
+              {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-6">
+                                <div class="card bg-warning text-white mb-4">
+                                    <div class="card-body">EN REPARACIÓN: {{ en_reparacion_count }}</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#" data-toggle="modal" data-target="#modal_en_reparacion">Ver detalles</a>
+
+<!-- Modal ingresos en reparación -->
+<div class="modal fade" id="modal_en_reparacion" tabindex="-1" role="dialog" aria-labelledby="modal_en_reparacionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Ingresos en Reparación</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+  
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Técnico</th>
+                <th>Descripción del problema</th>
+                <th>Perifericos</th>
+                <th>Fecha de ingreso</th>
+                <th>Equipo</th>
+                <th>Funcionario</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for ingreso in ingresos_en_reparacion %}
+              <tr>
+                <td>{{ ingreso.id_ingreso }}</td>
+                <td>{{ ingreso.tecnico }}</td>
+                <td>{{ ingreso.descripcion_problema }}</td>
+                <td>
+                  {% for periferico in ingreso.perifericos %}
+                  {{ periferico }}{% if not forloop.last %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td>{{ ingreso.fecha_ingreso }}</td>
+                <td>{{ ingreso.equipo }}</td>
+                <td>{{ ingreso.funcionario }}</td>
+                <td>{{ ingreso.estado_equipo }}</td>
+              </tr>
+                {% empty %}
+              <tr>
+                  <td colspan="8">No hay ingresos</td>
+              </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
+  </div>
+</div>                                 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-6">
+                                <div class="card bg-success text-white mb-4">
+                                    <div class="card-body">REPARADOS: {{ reparados_count }}</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#" data-toggle="modal" data-target="#modal_reparados">Ver detalles</a>
+
+                                        <!-- Modal ingresos en reparación -->
+                                        <div class="modal fade" id="modal_reparados" tabindex="-1" role="dialog" aria-labelledby="modal_reparadosLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h4 class="modal-title">Ingresos Reparados</h4>
+                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                                <div class="modal-body">
+                                          
+                                                  <table class="table">
+                                                    <thead>
+                                                      <tr>
+                                                        <th>ID</th>
+                                                        <th>Técnico</th>
+                                                        <th>Descripción del problema</th>
+                                                        <th>Perifericos</th>
+                                                        <th>Fecha de ingreso</th>
+                                                        <th>Equipo</th>
+                                                        <th>Funcionario</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      {% for ingreso in ingresos_reparados %}
+                                                      <tr>
+                                                        <td>{{ ingreso.id_ingreso }}</td>
+                                                        <td>{{ ingreso.tecnico }}</td>
+                                                        <td>{{ ingreso.descripcion_problema }}</td>
+                                                        <td>
+                                                          {% for periferico in ingreso.perifericos %}
+                                                          {{ periferico }}{% if not forloop.last %}, {% endif %}
+                                                          {% endfor %}
+                                                        </td>
+                                                        <td>{{ ingreso.fecha_ingreso }}</td>
+                                                        <td>{{ ingreso.equipo }}</td>
+                                                        <td>{{ ingreso.funcionario }}</td>
+                                                        <td>{{ ingreso.estado_equipo }}</td>
+                                                      </tr>
+                                                        {% empty %}
+                                                      <tr>
+                                                          <td colspan="8">No hay ingresos</td>
+                                                      </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                  </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                </div>
+                                            </div>
+                                          </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-area me-1"></i>
+                                        Gráfico de área 
+                                    </div>
+                                    <div class="card-body">
+                                      <img src="data:image/png;base64,{{ graphic }}" width="500" height="400" alt="Grafico de ingresos">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-bar me-1"></i>
+                                        Gráfico de Ingresos por Dia
+                                    </div>
+                                    <div class="card-body">
+                                        <img src="{% url 'grafico_ingresos' %}" width="500" height="400" alt="Gráfico de cantidad de ingresos por día">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Tabla de ingresos
+                                <a href="{% url 'export_to_excel' %}" class="btn btn-primary btn-right">Exportar a Excel</a>
+                            </div>
+                            <div class="card-body">
+                              <div class="table-responsive py-2">
+                                <table class="table table-striped" id="MyTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>QR</th>
+                                            <th>Técnico</th>
+                                            <th>Descripción del problema</th>
+                                            <th>Perifericos</th>
+                                            <th>Fecha de ingreso</th>
+                                            <th>Equipo</th>
+                                            <th>Funcionario</th>
+                                            <th>Departamento</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>QR</th>
+                                            <th>Técnico</th>
+                                            <th>Descripción del problema</th>
+                                            <th>Perifericos</th>
+                                            <th>Fecha de ingreso</th>
+                                            <th>Equipo</th>
+                                            <th>Funcionario</th>
+                                            <th>Departamento</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        {% for ingreso in ingresos %}
+                                           <tr>
+                                               <td>{{ ingreso.id_ingreso }}</td>
+                                               <td>
+                                                <img src="/static/img/DOM12.png" height="50px" width="50px" alt="Código QR">
+                                               </td>
+                                               <td>{{ ingreso.tecnico }}</td>
+                                               <td>{{ ingreso.descripcion_problema }}</td>
+                                               <td>
+                                                {% for periferico in ingreso.perifericos %}
+                                                {{ periferico }}{% if not forloop.last %}, {% endif %}
+                                                {% endfor %}
+                                               </td>
+                                               <td>{{ ingreso.fecha_ingreso }}</td>
+                                               <td>{{ ingreso.equipo }}</td>
+                                               <td>{{ ingreso.funcionario }}</td>
+                                               <td>{{ ingreso.equipo.depto.id_departamento }}</td>
+                                               <td class="{% if ingreso.estado_equipo == 'En espera' %}en-espera{% elif ingreso.estado_equipo == 'En reparacion' %}en-reparacion{% elif ingresp.estado_equipo == 'Reparado' %}reparado{% elif ingreso.estado_equipo == 'No reparado' %}no-reparado{% endif %}">
+                                                {{ ingreso.estado_equipo }}
+                                              </td>
+                                          
+                                            </tr>
+                                            {% empty %}
+                                           <tr>
+                                               <td colspan="9">No hay ingresos</td>
+                                           </tr>
+                                            {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">ILUSTRE MUNICIPALIDAD DE COQUIMBO (C.C.H.P) - Departamento de gestión de sistemas y TICS</div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+<!--Modal-->
+
+{% endblock %}

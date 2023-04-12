@@ -1,0 +1,49 @@
+{% extends "./base.html" %}
+
+{% block title %} CREAR EQUIPO {% endblock %}
+
+{% block body %}
+<div class="container mt-3">
+  <h1>Funcionarios</h1>
+  <form method="GET" class="form-inline mb-2">
+    <div class="form-group mr-6">
+      <input type="text" name="search" class="form-control search-bar" placeholder="Buscar por nombre...">
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+  </form>
+  <a href="{% url 'funcionarios_create' %}" class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Agregar Funcionario</a>
+  <div class="table-responsive py-2">
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                <th>RUT</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Acciones</th>
+              </tr>
+          </thead>
+          <tbody>
+                {% for funcionario in funcionarios %}
+                <tr>
+                    <td>{{ funcionario.rut_funcionario }}</td>
+                    <td>{{ funcionario.nombre }}</td>
+                    <td>{{ funcionario.apellido }}</td>
+                    <td>{{ funcionario.telefono }}</td>
+                    <td>{{ funcionario.email }}</td>
+                    <td>
+                        <a href="{% url 'funcionarios_edit' funcionario.rut_funcionario %}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Editar</a>
+                        <a href="{% url 'funcionarios_delete' funcionario.rut_funcionario %}" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No hay funcionarios</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

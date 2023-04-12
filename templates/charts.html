@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %} GRÁFICOS {% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Cantidad de ingresos por técnico</h5>
+                <div id="chartContainer1" style="height: auto; width: 100px;" ></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Cantidad de ventas por producto</h5>
+                <div id="chartContainer2" style="height: 250px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Cantidad de clientes por mes</h5>
+                <div id="chartContainer3" style="height: 250px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+window.onload = function () {
+    var chart1 = new CanvasJS.Chart("chartContainer1", {
+        animationEnabled: true,
+        exportEnabled: true,
+        title:{
+            text: "Cantidad de ingresos por técnico"
+        },
+        data: [{
+            type: "pie",
+            showInLegend: "true",
+            legendText: "{label}",
+            indexLabelFontSize: 16,
+            indexLabel: "{label} - #percent%",
+            yValueFormatString: "##0",
+            dataPoints: [
+                { y: 67, label: "Jonathan Chandia" },
+                { y: 28, label: "Sebastian Feminis" },
+                { y: 10, label: "Ignacio Rosales" },
+                { y: 7, label: "Claudia cubillos" },
+                { y: 15, label: "Camila Herrera" }
+            ]
+        }]
+    });
+    chart1.render();
+
+    var chart2 = new CanvasJS.Chart("chartContainer2", {
+        animationEnabled: true,
+        exportEnabled: true,
+        title:{
+            text: "Cantidad de ventas por producto"
+        },
+        data: [{
+            type: "column",
+            dataPoints: [
+                { y: 71, label: "Producto A" },
+                { y: 55, label: "Producto B" },
+                { y: 50, label: "Producto C" },
+                { y: 65, label: "Producto D" },
+                { y: 95, label: "Producto E" }
+            ]
+        }]
+    });
+    chart2.render();
+
+    var chart3 = new CanvasJS.Chart("chartContainer3", {
+        animationEnabled: true,
+        exportEnabled: true,
+        title:{
+            text: "Cantidad de clientes por mes"
+        },
+        data: [{
+            type: "line",
+            dataPoints: [
+                { x: new Date(2022, 0), y: 130 },
+                { x: new Date(2022, 1), y: 150 },
+                { x: new Date(2022, 2), y: 180 },
+                { x: new Date(2022, 3), y: 200 },
+                { x: new Date(2022, 4), y: 170 },
+                { x: new Date(2022, 5), y: 190 },
+                { x: new Date(2022, 6), y: 210 },
+                { x: new Date(2022, 7), y: 230 },
+                { x: new Date(2022, 8), y: 240 },
+                { x: new Date(2022, 9), y: 260 },
+                { x: new Date(2022, 10), y: 290 },
+                { x: new Date(2022, 11), y: 310 }
+            ]
+        }]
+    });
+    chart3.render();
+}
+</script>
+{% endblock %}
+               

@@ -1,0 +1,71 @@
+{% extends "./base.html" %}
+
+{% block title %} CREAR INGRESO {% endblock %}
+
+{% block body %}
+<div class="container mt-3">
+  <h1>Ingresos</h1>
+  <form method="GET" action="{% url 'ingresos_search' %}">
+    <div class="input-group">
+      <input type="text" class="form-control" name="q" placeholder="Buscar...">
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Buscar</button>
+      </span>
+    </div>
+  <a href="{% url 'ingresos_create' %}" class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Agregar Ingreso</a>
+  <div class="table-responsive py-2">
+    <table class="table table-striped">
+          <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Técnico</th>
+                <th scope="col">Descripción del problema</th>
+                <th scope="col">Periféricos</th>
+                <th scope="col">Fecha de ingreso</th>
+                <th scope="col">Equipo</th>
+                <th scope="col">Funcionario</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Fecha de salida</th>
+                <th scope="col">Descripción reparación</th>
+                <th scope="col">Acciones</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for ingreso in ingresos %}
+              <tr>
+                <td>{{ ingreso.id_ingreso }}</td>
+                <td>{{ ingreso.tecnico }}</td>
+                <td>{{ ingreso.descripcion_problema }}</td>
+                <td>
+                  {% for periferico in ingreso.perifericos %}
+                  {{ periferico }}{% if not forloop.last %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td>{{ ingreso.fecha_ingreso }}</td>
+                <td>{{ ingreso.equipo }}</td>
+                <td>{{ ingreso.funcionario }}</td>
+                <td>{{ ingreso.estado_equipo }}</td>
+                <td>{{ ingreso.fecha_salida }}</td>
+                <td>{{ ingreso.descripcion_reparacion }}</td>
+                <td>
+                  <a href="{% url 'ingresos_update' ingreso.id_ingreso %}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                  <a href="{% url 'ingresos_delete' ingreso.id_ingreso %}" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                </td>
+              </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9">No hay Ingresos</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+    
+
+

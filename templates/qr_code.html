@@ -1,0 +1,76 @@
+{% extends "./base.html" %}
+
+{% block title %} QR {% endblock %}
+
+{% block body %}
+    <style>
+      .card-body {
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+      <div class="container">
+        <h1>Ingresos por QR</h1>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              Escanear Codigo QR
+            </div>
+            <div class="card-body">
+              <div id="qr-reader"></div>
+              <div id="qr-reader-results"></div>
+              <script src="https://cdn.rawgit.com/mebjas/html5-qrcode/master/minified/html5-qrcode.min.js"></script>
+              <script>
+                var resultContainer = document.getElementById('qr-reader-results');
+                var lastResult, countResults = 0;
+                function onScanSuccess(decodedText, decodedResult) {
+                  if (decodedText !== lastResult) {
+                    ++countResults;
+                    lastResult = decodedText;
+                    resultContainer.innerHTML += '<div class="alert alert-success" role="alert">' + decodedText + '</div>';
+                  }
+                }
+                var html5QrcodeScanner = new Html5QrcodeScanner(
+                  "qr-reader", { fps: 10, qrbox: 250 });
+                html5QrcodeScanner.render(onScanSuccess);
+              </script>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              <i class="bi bi-qr-code-scan">Crear Codigo QR</i>
+            </div>
+            <div class="card-body">
+              <form>
+                <div class="form-group">
+                  <label for="text-input">Ingresa ID Registro</label>
+                  <input type="text" class="form-control" id="text-input">
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-primary" onclick="generateQRCode()">Generar codigo QR</button>
+                </div>
+              </form>
+              <div id="qr-code"></div>
+              <script src="https://cdn.jsdelivr.net/npm/qrcode-generator/qrcode.min.js"></script>
+              <script>
+                function generateQRCode() {
+                  var text = document.getElementById('text-input').value;
+                  if (text !== '') {
+                    var qr = qrcode(0, 'L');
+                    qr.addData(text);
+                    qr.make();
+                    document.getElementById('qr-code').innerHTML = qr.createImgTag();
+                  } else {
+                    alert('Por favor ingresa un texto');
+                  }
+                }
+    
+            </script>
+            {% endblock %}

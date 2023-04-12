@@ -1,0 +1,42 @@
+{% extends "./base.html" %}
+
+{% block title %} LISTADO TÉCNICOS{% endblock %}
+
+{% block body %}
+<div class="container mt-3">
+  <h1>Técnicos</h1>
+  <a href="{% url 'tecnicos_create' %}" class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Agregar técnico</a>
+  <div class="table-responsive py-2">
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                <th>RUT</th>
+                <th>nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Acciones</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for tecnico in tecnicos %}
+              <tr>
+                <td>{{ tecnico.rut_tecnico }}</td>
+                <td>{{ tecnico.nombre }}</td>
+                <td>{{ tecnico.apellido }}</td>
+                <td>{{ tecnico.email }}</td>
+
+                <td>
+                    <a href="{% url 'tecnicos_edit' tecnico.rut_tecnico %}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Editar</a>
+                    <a href="{% url 'tecnicos_delete' tecnico.rut_tecnico %}" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Eliminar</a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                  <td colspan="3">No hay técnicos registrados</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+  </div>
+</div>
+{% endblock %}
